@@ -1,13 +1,12 @@
 import { useState } from "react";
-import mockTransactions from "../data/mockTransactions.js";
+import useTransactions from "../hooks/useTransactions.js";
 import TransactionCard from "../components/TransactionCard.jsx";
 import FilterBar from "../components/FilterBar.jsx";
 import { formatCurrency } from "../utils/format.js";
 
 function Dashboard() {
-  // TEMPORARY: reading from mock data for now.
-  // In Phase 3 this will come from the useTransactions() custom hook instead.
-  const transactions = mockTransactions;
+  // Real, persistent data now — read from localStorage via our custom hook.
+  const { transactions } = useTransactions();
 
   const [typeFilter, setTypeFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
