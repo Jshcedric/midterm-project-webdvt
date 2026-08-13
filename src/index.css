@@ -596,6 +596,77 @@ a {
   gap: 12px;
 }
 
+/* ---------- Summary page ---------- */
+.summary-total-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  max-width: 280px;
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 640px;
+}
+
+.category-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 8px;
+}
+
+.category-row-top {
+  grid-column: 1 / span 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.category-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.category-amount {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--expense);
+}
+
+.progress-track {
+  grid-column: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--expense);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.category-percent {
+  grid-column: 2;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  min-width: 40px;
+  text-align: right;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 640px) {
   .navbar-inner {
@@ -643,5 +714,9 @@ a {
 
   .form-card {
     padding: 18px;
+  }
+
+  .summary-total-card {
+    max-width: 100%;
   }
 }
