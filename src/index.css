@@ -22,6 +22,43 @@
   --font-body: "Inter", "Segoe UI", sans-serif;
 }
 
+:root[data-theme="dark"] {
+  --bg: #12141c;
+  --surface: #1b1e29;
+  --text: #eef0f6;
+  --text-muted: #9aa0b4;
+  --border: #2b2f3d;
+
+  --primary: #818cf8;
+  --primary-dark: #6366f1;
+  --primary-soft: rgba(129, 140, 248, 0.16);
+
+  --income: #34d399;
+  --income-soft: rgba(52, 211, 153, 0.14);
+  --expense: #f87171;
+  --expense-soft: rgba(248, 113, 113, 0.14);
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+body,
+.navbar,
+.summary-card,
+.transaction-card,
+.form-card,
+.detail-card,
+.placeholder-card,
+.category-row,
+.summary-total-card,
+.not-found-card,
+.filter-group,
+.filter-select,
+.form-field input,
+.form-field select,
+.form-field textarea {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
 /* ---------- Reset ---------- */
 * {
   box-sizing: border-box;
@@ -137,14 +174,29 @@ a {
   color: #fff;
 }
 
-.theme-toggle-placeholder {
+.theme-toggle {
   border: 1px solid var(--border);
   background: var(--surface);
   border-radius: 999px;
   width: 36px;
   height: 36px;
   font-size: 1rem;
-  opacity: 0.4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--primary-soft);
+  transform: scale(1.05);
+}
+
+.page-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 /* ---------- Generic page styles (used by all pages) ---------- */
@@ -718,5 +770,9 @@ a {
 
   .summary-total-card {
     max-width: 100%;
+  }
+
+  .page-header-row {
+    align-items: center;
   }
 }

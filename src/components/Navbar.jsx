@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 function Navbar() {
   // NavLink automatically adds an "active" class when the route matches,
@@ -26,10 +27,8 @@ function Navbar() {
           </NavLink>
         </nav>
 
-        {/* Theme toggle button will be wired up to Context API in Phase 7 */}
-        <button className="theme-toggle-placeholder" disabled>
-          🌙
-        </button>
+        {/* Global theme toggle, now wired up via Context API */}
+        <ThemeToggle />
       </div>
     </header>
   );
