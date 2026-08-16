@@ -8,7 +8,7 @@ function TransactionCard({ transaction }) {
   return (
     <Link to={`/transaction/${transaction.id}`} className="transaction-card">
       <div className={`transaction-icon ${isIncome ? "icon-income" : "icon-expense"}`}>
-        {isIncome ? "↓" : "↑"}
+        {isIncome ? "↑" : "↓"}
       </div>
 
       <div className="transaction-main">

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getCategoriesForType } from "../data/categories.js";
+import { getTodayDateString } from "../utils/format.js";
 
 // Reusable for both "Add Transaction" and "Edit Transaction" (Phase 5).
 // Pass `initialValues` to pre-fill the form when editing.
@@ -10,7 +11,7 @@ function TransactionForm({ initialValues, onSubmit, submitLabel = "Save Transact
       amount: "",
       type: "expense",
       category: "",
-      date: new Date().toISOString().slice(0, 10),
+      date: getTodayDateString(),
       description: "",
     }
   );
