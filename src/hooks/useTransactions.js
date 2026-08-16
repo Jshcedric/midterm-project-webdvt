@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import mockTransactions from "../data/mockTransactions.js";
 
 // The localStorage key we save everything under.
@@ -20,6 +20,21 @@ function loadTransactions() {
   }
 }
 
+// Writes the given array straight to localStorage. We call this directly
+// (synchronously) inside each mutator below instead of inside a useEffect.
+// Why: pages like "Add Transaction" call navigate("/") immediately after
+// updating state. React batches that state update with the route change,
+// which can unmount the component before a useEffect gets a chance to run —
+// so the save would silently never happen. Writing synchronously here
+// guarantees the data is saved before we ever navigate away.
+function saveTransactions(transactions) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
+  } catch (error) {
+    console.error("Failed to save transactions to localStorage:", error);
+  }
+}
+
 // Generates a unique-enough id without needing an extra library.
 function generateId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
@@ -31,33 +46,29 @@ function generateId() {
 function useTransactions() {
   const [transactions, setTransactions] = useState(loadTransactions);
 
-  // Whenever the transactions list changes, save it back to localStorage
-  // so the data survives a page refresh.
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
-    } catch (error) {
-      console.error("Failed to save transactions to localStorage:", error);
-    }
-  }, [transactions]);
-
   function addTransaction(transaction) {
     const newTransaction = {
       ...transaction,
       id: generateId(),
     };
-    setTransactions((prev) => [...prev, newTransaction]);
+    const updated = [...transactions, newTransaction];
+    saveTransactions(updated);
+    setTransactions(updated);
     return newTransaction;
   }
 
   function updateTransaction(id, updatedFields) {
-    setTransactions((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, ...updatedFields } : t))
+    const updated = transactions.map((t) =>
+      t.id === id ? { ...t, ...updatedFields } : t
     );
+    saveTransactions(updated);
+    setTransactions(updated);
   }
 
   function deleteTransaction(id) {
-    setTransactions((prev) => prev.filter((t) => t.id !== id));
+    const updated = transactions.filter((t) => t.id !== id);
+    saveTransactions(updated);
+    setTransactions(updated);
   }
 
   function getTransactionById(id) {
