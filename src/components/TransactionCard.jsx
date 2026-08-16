@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { formatCurrency, formatDate } from "../utils/format.js";
 
@@ -27,4 +28,4 @@ function TransactionCard({ transaction }) {
   );
 }
 
-export default TransactionCard;
+export default memo(TransactionCard);

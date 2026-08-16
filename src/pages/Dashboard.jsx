@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import useTransactions from "../hooks/useTransactions.js";
 import TransactionCard from "../components/TransactionCard.jsx";
 import FilterBar from "../components/FilterBar.jsx";
@@ -11,32 +11,41 @@ function Dashboard() {
   const [typeFilter, setTypeFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
 
-  // Totals are always calculated from ALL transactions, not the filtered
-  // list, so the summary cards stay accurate no matter what filter is active.
-  const totalIncome = transactions
-    .filter((t) => t.type === "income")
-    .reduce((sum, t) => sum + Number(t.amount), 0);
+  // Totals only depend on `transactions`, NOT on the filters. Without
+  // useMemo, every time the user clicks a filter pill, Dashboard re-renders
+  // and these reduce()/filter() calls would re-run from scratch even though
+  // the underlying transactions haven't changed at all. useMemo skips that
+  // recalculation unless `transactions` itself changes.
+  const { totalIncome, totalExpense, balance } = useMemo(() => {
+    const income = transactions
+      .filter((t) => t.type === "income")
+      .reduce((sum, t) => sum + Number(t.amount), 0);
 
-  const totalExpense = transactions
-    .filter((t) => t.type === "expense")
-    .reduce((sum, t) => sum + Number(t.amount), 0);
+    const expense = transactions
+      .filter((t) => t.type === "expense")
+      .reduce((sum, t) => sum + Number(t.amount), 0);
 
-  const balance = totalIncome - totalExpense;
+    return { totalIncome: income, totalExpense: expense, balance: income - expense };
+  }, [transactions]);
 
-  // Unique category list for the filter dropdown.
-  const categories = [...new Set(transactions.map((t) => t.category))];
-
-  // Apply both filters to decide what shows up in the list below.
-  const filteredTransactions = transactions.filter((t) => {
-    const matchesType = typeFilter === "all" || t.type === typeFilter;
-    const matchesCategory = categoryFilter === "all" || t.category === categoryFilter;
-    return matchesType && matchesCategory;
-  });
-
-  // Most recent first.
-  const sortedTransactions = [...filteredTransactions].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
+  // Same idea — the category list only needs to change when transactions change.
+  const categories = useMemo(
+    () => [...new Set(transactions.map((t) => t.category))],
+    [transactions]
   );
+
+  // This one DOES need to re-run when the filters change (that's its job),
+  // but it should only run when transactions, typeFilter, or categoryFilter
+  // actually change — not on every Dashboard re-render for unrelated reasons.
+  const sortedTransactions = useMemo(() => {
+    const filtered = transactions.filter((t) => {
+      const matchesType = typeFilter === "all" || t.type === typeFilter;
+      const matchesCategory = categoryFilter === "all" || t.category === categoryFilter;
+      return matchesType && matchesCategory;
+    });
+
+    return [...filtered].sort((a, b) => new Date(b.date) - new Date(a.date));
+  }, [transactions, typeFilter, categoryFilter]);
 
   return (
     <div className="page">
