@@ -95,6 +95,15 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 /* ---------- App shell ---------- */
 .app-shell {
   min-height: 100%;
@@ -221,6 +230,10 @@ a {
   text-align: center;
   color: var(--text-muted);
   font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
 /* ---------- Summary cards ---------- */
@@ -712,6 +725,25 @@ a {
   font-weight: 500;
   min-width: 40px;
   text-align: right;
+}
+
+.required-mark {
+  color: var(--expense);
+}
+
+.form-field input[aria-invalid="true"],
+.form-field select[aria-invalid="true"] {
+  border-color: var(--expense);
+}
+
+.form-field input[aria-invalid="true"]:focus,
+.form-field select[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 3px var(--expense-soft);
+}
+
+.empty-state-cta {
+  display: inline-flex;
+  margin-top: 12px;
 }
 
 /* ---------- Responsive ---------- */

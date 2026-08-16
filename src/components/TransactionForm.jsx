@@ -79,20 +79,30 @@ function TransactionForm({ initialValues, onSubmit, submitLabel = "Save Transact
   return (
     <form className="transaction-form" onSubmit={handleSubmit} noValidate>
       <div className="form-field">
-        <label htmlFor="title">Title</label>
+        <label htmlFor="title">
+          Title <span className="required-mark">*</span>
+        </label>
         <input
           id="title"
           type="text"
           placeholder="e.g. Lunch at school"
           value={values.title}
           onChange={(e) => handleChange("title", e.target.value)}
+          aria-invalid={Boolean(errors.title)}
+          aria-describedby={errors.title ? "title-error" : undefined}
         />
-        {errors.title && <p className="form-error">{errors.title}</p>}
+        {errors.title && (
+          <p className="form-error" id="title-error" role="alert">
+            {errors.title}
+          </p>
+        )}
       </div>
 
       <div className="form-row">
         <div className="form-field">
-          <label htmlFor="amount">Amount (₱)</label>
+          <label htmlFor="amount">
+            Amount (₱) <span className="required-mark">*</span>
+          </label>
           <input
             id="amount"
             type="number"
@@ -101,28 +111,45 @@ function TransactionForm({ initialValues, onSubmit, submitLabel = "Save Transact
             placeholder="0.00"
             value={values.amount}
             onChange={(e) => handleChange("amount", e.target.value)}
+            aria-invalid={Boolean(errors.amount)}
+            aria-describedby={errors.amount ? "amount-error" : undefined}
           />
-          {errors.amount && <p className="form-error">{errors.amount}</p>}
+          {errors.amount && (
+            <p className="form-error" id="amount-error" role="alert">
+              {errors.amount}
+            </p>
+          )}
         </div>
 
         <div className="form-field">
-          <label htmlFor="date">Date</label>
+          <label htmlFor="date">
+            Date <span className="required-mark">*</span>
+          </label>
           <input
             id="date"
             type="date"
             value={values.date}
             onChange={(e) => handleChange("date", e.target.value)}
+            aria-invalid={Boolean(errors.date)}
+            aria-describedby={errors.date ? "date-error" : undefined}
           />
-          {errors.date && <p className="form-error">{errors.date}</p>}
+          {errors.date && (
+            <p className="form-error" id="date-error" role="alert">
+              {errors.date}
+            </p>
+          )}
         </div>
       </div>
 
       <div className="form-field">
-        <label>Type</label>
-        <div className="type-toggle">
+        <label id="type-label">
+          Type <span className="required-mark">*</span>
+        </label>
+        <div className="type-toggle" role="group" aria-labelledby="type-label">
           <button
             type="button"
             className={`type-option ${values.type === "expense" ? "type-option-active-expense" : ""}`}
+            aria-pressed={values.type === "expense"}
             onClick={() => handleChange("type", "expense")}
           >
             Expense
@@ -130,20 +157,29 @@ function TransactionForm({ initialValues, onSubmit, submitLabel = "Save Transact
           <button
             type="button"
             className={`type-option ${values.type === "income" ? "type-option-active-income" : ""}`}
+            aria-pressed={values.type === "income"}
             onClick={() => handleChange("type", "income")}
           >
             Income
           </button>
         </div>
-        {errors.type && <p className="form-error">{errors.type}</p>}
+        {errors.type && (
+          <p className="form-error" role="alert">
+            {errors.type}
+          </p>
+        )}
       </div>
 
       <div className="form-field">
-        <label htmlFor="category">Category</label>
+        <label htmlFor="category">
+          Category <span className="required-mark">*</span>
+        </label>
         <select
           id="category"
           value={values.category}
           onChange={(e) => handleChange("category", e.target.value)}
+          aria-invalid={Boolean(errors.category)}
+          aria-describedby={errors.category ? "category-error" : undefined}
         >
           <option value="">Select a category</option>
           {categoryOptions.map((category) => (
@@ -152,7 +188,11 @@ function TransactionForm({ initialValues, onSubmit, submitLabel = "Save Transact
             </option>
           ))}
         </select>
-        {errors.category && <p className="form-error">{errors.category}</p>}
+        {errors.category && (
+          <p className="form-error" id="category-error" role="alert">
+            {errors.category}
+          </p>
+        )}
       </div>
 
       <div className="form-field">

@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import useTransactions from "../hooks/useTransactions.js";
 import TransactionCard from "../components/TransactionCard.jsx";
 import FilterBar from "../components/FilterBar.jsx";
@@ -50,6 +51,9 @@ function Dashboard() {
   return (
     <div className="page">
       <h1 className="page-title">Dashboard</h1>
+      <p className="page-subtitle">
+        Track your balance and browse every income and expense you've logged.
+      </p>
 
       <div className="summary-grid">
         <div className="summary-card summary-card-balance">
@@ -79,7 +83,16 @@ function Dashboard() {
       <div className="transaction-list">
         {sortedTransactions.length === 0 ? (
           <div className="placeholder-card">
-            No transactions match this filter.
+            {transactions.length === 0 ? (
+              <>
+                <p>You haven't added any transactions yet.</p>
+                <Link to="/add" className="btn-primary btn-inline empty-state-cta">
+                  Add your first transaction
+                </Link>
+              </>
+            ) : (
+              "No transactions match this filter."
+            )}
           </div>
         ) : (
           sortedTransactions.map((transaction) => (
