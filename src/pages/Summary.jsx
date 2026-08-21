@@ -34,10 +34,6 @@ function Summary() {
   return (
     <div className="page">
       <h1 className="page-title">Summary</h1>
-      <p className="page-subtitle">
-        A breakdown of your spending by category, calculated from all of your
-        saved transactions.
-      </p>
 
       <div className="summary-total-card">
         <p className="summary-label">Total Spending</p>

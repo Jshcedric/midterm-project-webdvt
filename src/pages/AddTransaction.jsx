@@ -14,9 +14,6 @@ function AddTransaction() {
   return (
     <div className="page">
       <h1 className="page-title">Add Transaction</h1>
-      <p className="page-subtitle">
-        Fill in the details below to record a new income or expense.
-      </p>
 
       <div className="form-card">
         <TransactionForm onSubmit={handleAdd} submitLabel="Add Transaction" />
