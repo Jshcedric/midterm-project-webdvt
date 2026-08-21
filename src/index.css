@@ -293,7 +293,7 @@ textarea:focus-visible {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: 16px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .hero-balance-card {
@@ -304,13 +304,11 @@ textarea:focus-visible {
   box-shadow: 0 14px 30px rgba(79, 70, 229, 0.28);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 24px;
-  min-height: 200px;
+  gap: 28px;
 }
 
 .hero-label {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.78);
   font-weight: 500;
@@ -321,6 +319,8 @@ textarea:focus-visible {
   font-family: var(--font-heading);
   font-size: 2.3rem;
   font-weight: 700;
+  line-height: 1.1;
+  word-break: break-word;
 }
 
 .hero-stats {
@@ -333,31 +333,34 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(255, 255, 255, 0.16);
-  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #312e81;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 9px 16px;
   border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(30, 27, 75, 0.15);
 }
 
 .hero-stat strong {
   font-weight: 700;
-  color: #fff;
+  color: #1e1b4b;
 }
 
 .hero-stat-dot {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   display: inline-block;
+  flex-shrink: 0;
 }
 
 .dot-income {
-  background: #4ade80;
+  background: #16a34a;
 }
 
 .dot-expense {
-  background: #fb7185;
+  background: #e11d48;
 }
 
 .chart-card {
