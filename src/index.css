@@ -324,6 +324,35 @@ textarea:focus-visible {
   word-break: break-word;
 }
 
+.hero-value-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.balance-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.balance-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.balance-toggle:active {
+  transform: scale(0.92);
+}
+
 .hero-stats {
   display: flex;
   gap: 10px;

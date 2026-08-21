@@ -4,6 +4,7 @@ import useTransactions from "../hooks/useTransactions.js";
 import TransactionCard from "../components/TransactionCard.jsx";
 import FilterBar from "../components/FilterBar.jsx";
 import DonutChart from "../components/DonutChart.jsx";
+import EyeIcon from "../components/EyeIcon.jsx";
 import { formatCurrency } from "../utils/format.js";
 import { getCategoryColor } from "../utils/categoryColors.js";
 
@@ -13,6 +14,7 @@ function Dashboard() {
 
   const [typeFilter, setTypeFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
+  const [showBalance, setShowBalance] = useState(true);
 
   // Totals only depend on `transactions`, NOT on the filters. Without
   // useMemo, every time the user clicks a filter pill, Dashboard re-renders
@@ -76,7 +78,20 @@ function Dashboard() {
         <div className="hero-balance-card">
           <div>
             <p className="hero-label">Current Balance</p>
-            <p className="hero-value">{formatCurrency(balance)}</p>
+            <div className="hero-value-row">
+              <p className="hero-value">
+                {showBalance ? formatCurrency(balance) : "₱ • • • • • •"}
+              </p>
+              <button
+                type="button"
+                className="balance-toggle"
+                onClick={() => setShowBalance((visible) => !visible)}
+                aria-label={showBalance ? "Hide balance" : "Show balance"}
+                title={showBalance ? "Hide balance" : "Show balance"}
+              >
+                <EyeIcon visible={showBalance} />
+              </button>
+            </div>
           </div>
           <div className="hero-stats">
             <div className="hero-stat">
