@@ -3,6 +3,7 @@ import { EXPENSE_CATEGORIES } from "../data/categories.js";
 import { formatCurrency } from "../utils/format.js";
 import { getCategoryColor } from "../utils/categoryColors.js";
 import DonutChart from "../components/DonutChart.jsx";
+import ScrollToTopButton from "../components/ScrollToTopButton.jsx";
 
 function Summary() {
   // Reuses the SAME transaction data as the rest of the app —
@@ -81,6 +82,8 @@ function Summary() {
           </div>
         </>
       )}
+
+      <ScrollToTopButton />
     </div>
   );
 }

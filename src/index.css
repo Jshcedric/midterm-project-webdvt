@@ -1069,3 +1069,49 @@ textarea:focus-visible {
     max-width: 100%;
   }
 }
+
+/* ---------- Scroll-to-top button ---------- */
+.scroll-top-btn {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 55%, #a855f7 100%);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(79, 70, 229, 0.35);
+  cursor: pointer;
+  z-index: 40;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.9);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.scroll-top-btn.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.scroll-top-btn:hover {
+  filter: brightness(1.08);
+}
+
+.scroll-top-btn:active {
+  transform: scale(0.92);
+}
+
+@media (max-width: 600px) {
+  .scroll-top-btn {
+    right: 16px;
+    bottom: 16px;
+    width: 42px;
+    height: 42px;
+  }
+}

@@ -5,6 +5,7 @@ import TransactionCard from "../components/TransactionCard.jsx";
 import FilterBar from "../components/FilterBar.jsx";
 import DonutChart from "../components/DonutChart.jsx";
 import EyeIcon from "../components/EyeIcon.jsx";
+import ScrollToTopButton from "../components/ScrollToTopButton.jsx";
 import { formatCurrency } from "../utils/format.js";
 import { getCategoryColor } from "../utils/categoryColors.js";
 
@@ -108,7 +109,6 @@ function Dashboard() {
         </div>
 
         <div className="chart-card">
-          <p className="chart-card-title">Where it's going</p>
 
           {categoryBreakdown.length === 0 ? (
             <p className="chart-empty">Add a transaction to see your breakdown.</p>
@@ -184,6 +184,8 @@ function Dashboard() {
           ))
         )}
       </div>
+
+      <ScrollToTopButton />
     </div>
   );
 }
