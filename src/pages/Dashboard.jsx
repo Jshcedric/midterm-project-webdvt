@@ -71,9 +71,6 @@ function Dashboard() {
   return (
     <div className="page">
       <h1 className="page-title">Dashboard</h1>
-      <p className="page-subtitle">
-        Track your balance and browse every income and expense you've logged.
-      </p>
 
       <div className="dashboard-hero-grid">
         <div className="hero-balance-card">
