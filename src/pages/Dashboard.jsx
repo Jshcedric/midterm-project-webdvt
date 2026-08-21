@@ -102,19 +102,42 @@ function Dashboard() {
             <p className="chart-empty">Add a transaction to see your breakdown.</p>
           ) : (
             <>
-              <DonutChart
-                data={categoryBreakdown}
-                centerLabel="Total flow"
-                centerValue={formatCurrency(totalIncome + totalExpense)}
-              />
-              <ul className="chart-legend">
-                {categoryBreakdown.map((entry) => (
-                  <li key={entry.label} className="legend-item">
-                    <span className="legend-dot" style={{ background: entry.color }} />
-                    <span className="legend-label">{entry.label}</span>
-                    <span className="legend-value">{formatCurrency(entry.value)}</span>
-                  </li>
-                ))}
+              <div className="chart-donut-holder">
+                <DonutChart
+                  data={categoryBreakdown}
+                  size={200}
+                  thickness={28}
+                  centerLabel="Total flow"
+                  centerValue={formatCurrency(totalIncome + totalExpense)}
+                />
+              </div>
+
+              <ul className="breakdown-list">
+                {categoryBreakdown.map((entry) => {
+                  const percent =
+                    totalIncome + totalExpense > 0
+                      ? (entry.value / (totalIncome + totalExpense)) * 100
+                      : 0;
+
+                  return (
+                    <li key={entry.label} className="breakdown-row">
+                      <span
+                        className="breakdown-ring"
+                        style={{
+                          background: `conic-gradient(${entry.color} ${percent}%, var(--border) ${percent}% 100%)`,
+                        }}
+                      >
+                        <span className="breakdown-ring-percent">{Math.round(percent)}%</span>
+                      </span>
+
+                      <span className="breakdown-info">
+                        <span className="breakdown-name">{entry.label}</span>
+                      </span>
+
+                      <span className="breakdown-amount">{formatCurrency(entry.value)}</span>
+                    </li>
+                  );
+                })}
               </ul>
             </>
           )}
