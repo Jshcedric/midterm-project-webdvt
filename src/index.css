@@ -989,6 +989,121 @@ textarea:focus-visible {
   color: var(--expense);
 }
 
+/* ---------- Monthly spending tracker ---------- */
+.section-heading {
+  margin: 32px 0 16px;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  max-width: 640px;
+}
+
+.monthly-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 640px;
+}
+
+.month-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.month-card-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.month-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.month-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.month-card-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.month-total {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--expense);
+}
+
+.month-chevron {
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+.month-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.month-bar-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.month-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #4f46e5, #a855f7);
+  transition: width 0.3s ease;
+}
+
+.month-categories {
+  border-top: 1px solid var(--border);
+  padding: 12px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.month-category-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+
+.month-category-name {
+  flex: 1;
+  color: var(--text-muted);
+}
+
+.month-category-amount {
+  font-weight: 600;
+  color: var(--text);
+}
+
 .form-field input[aria-invalid="true"],
 .form-field select[aria-invalid="true"] {
   border-color: var(--expense);

@@ -24,7 +24,12 @@ export function formatDate(dateString) {
   });
 }
 
-// Returns today's date as "YYYY-MM-DD" using the user's LOCAL time.
+// Turns a "YYYY-MM" key into a friendly label like "August 2026".
+export function formatMonthLabel(monthKey) {
+  const [year, month] = monthKey.split("-").map(Number);
+  const date = new Date(year, month - 1, 1);
+  return date.toLocaleDateString("en-US", { year: "numeric", month: "long" });
+}
 // (new Date().toISOString() uses UTC, which can be a day off for users
 // ahead or behind UTC — e.g. late at night in the Philippines, UTC is
 // still "yesterday".) This builds the string from local date parts instead.
