@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import { formatCurrency, formatDate } from "../utils/format.js";
+import { getCategoryColor } from "../utils/categoryColors.js";
 
 function TransactionCard({ transaction }) {
   const isIncome = transaction.type === "income";
@@ -14,6 +15,10 @@ function TransactionCard({ transaction }) {
       <div className="transaction-main">
         <p className="transaction-title">{transaction.title}</p>
         <div className="transaction-meta">
+          <span
+            className="transaction-category-dot"
+            style={{ background: getCategoryColor(transaction.category) }}
+          />
           <span className="transaction-category">{transaction.category}</span>
           <span className="transaction-dot">•</span>
           <span className="transaction-date">{formatDate(transaction.date)}</span>

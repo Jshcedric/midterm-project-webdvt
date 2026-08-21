@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import useTransactions from "../hooks/useTransactions.js";
 import TransactionCard from "../components/TransactionCard.jsx";
 import FilterBar from "../components/FilterBar.jsx";
+import DonutChart from "../components/DonutChart.jsx";
 import { formatCurrency } from "../utils/format.js";
+import { getCategoryColor } from "../utils/categoryColors.js";
 
 function Dashboard() {
   // Real, persistent data now — read from localStorage via our custom hook.
@@ -35,6 +37,24 @@ function Dashboard() {
     [transactions]
   );
 
+  // Feeds the donut chart: every category (income AND expense — salary,
+  // groceries, whatever) gets its own slice sized by how much money moved
+  // through it, so the chart is a one-glance summary of the whole picture.
+  const categoryBreakdown = useMemo(() => {
+    const totals = {};
+    transactions.forEach((t) => {
+      totals[t.category] = (totals[t.category] || 0) + Number(t.amount);
+    });
+
+    return Object.entries(totals)
+      .map(([category, value]) => ({
+        label: category,
+        value,
+        color: getCategoryColor(category),
+      }))
+      .sort((a, b) => b.value - a.value);
+  }, [transactions]);
+
   // This one DOES need to re-run when the filters change (that's its job),
   // but it should only run when transactions, typeFilter, or categoryFilter
   // actually change — not on every Dashboard re-render for unrelated reasons.
@@ -55,20 +75,49 @@ function Dashboard() {
         Track your balance and browse every income and expense you've logged.
       </p>
 
-      <div className="summary-grid">
-        <div className="summary-card summary-card-balance">
-          <p className="summary-label">Current Balance</p>
-          <p className="summary-value">{formatCurrency(balance)}</p>
+      <div className="dashboard-hero-grid">
+        <div className="hero-balance-card">
+          <div>
+            <p className="hero-label">Current Balance</p>
+            <p className="hero-value">{formatCurrency(balance)}</p>
+          </div>
+          <div className="hero-stats">
+            <div className="hero-stat">
+              <span className="hero-stat-dot dot-income" />
+              <span>Income</span>
+              <strong>{formatCurrency(totalIncome)}</strong>
+            </div>
+            <div className="hero-stat">
+              <span className="hero-stat-dot dot-expense" />
+              <span>Expenses</span>
+              <strong>{formatCurrency(totalExpense)}</strong>
+            </div>
+          </div>
         </div>
 
-        <div className="summary-card">
-          <p className="summary-label">Total Income</p>
-          <p className="summary-value amount-income">{formatCurrency(totalIncome)}</p>
-        </div>
+        <div className="chart-card">
+          <p className="chart-card-title">Where it's going</p>
 
-        <div className="summary-card">
-          <p className="summary-label">Total Expenses</p>
-          <p className="summary-value amount-expense">{formatCurrency(totalExpense)}</p>
+          {categoryBreakdown.length === 0 ? (
+            <p className="chart-empty">Add a transaction to see your breakdown.</p>
+          ) : (
+            <>
+              <DonutChart
+                data={categoryBreakdown}
+                centerLabel="Total flow"
+                centerValue={formatCurrency(totalIncome + totalExpense)}
+              />
+              <ul className="chart-legend">
+                {categoryBreakdown.map((entry) => (
+                  <li key={entry.label} className="legend-item">
+                    <span className="legend-dot" style={{ background: entry.color }} />
+                    <span className="legend-label">{entry.label}</span>
+                    <span className="legend-value">{formatCurrency(entry.value)}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
       </div>
 
