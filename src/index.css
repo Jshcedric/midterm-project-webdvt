@@ -48,8 +48,8 @@ body,
 .form-card,
 .detail-card,
 .placeholder-card,
-.category-row,
-.summary-total-card,
+.panel-card,
+.stat-card,
 .not-found-card,
 .filter-group,
 .filter-select,
@@ -912,122 +912,181 @@ textarea:focus-visible {
 }
 
 /* ---------- Summary page ---------- */
-.summary-total-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  box-shadow: var(--shadow);
-  max-width: 280px;
-}
-
-.category-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  max-width: 640px;
-}
-
-.category-row {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  column-gap: 12px;
-  row-gap: 8px;
-}
-
-.category-row-top {
-  grid-column: 1 / span 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-.category-name {
-  font-weight: 600;
-  font-size: 0.95rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.category-amount {
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: var(--expense);
-}
-
-.progress-track {
-  grid-column: 1;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--bg);
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--expense);
-  border-radius: 999px;
-  transition: width 0.3s ease;
-}
-
-.category-percent {
-  grid-column: 2;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-weight: 500;
-  min-width: 40px;
-  text-align: right;
-}
-
 .required-mark {
   color: var(--expense);
 }
 
-/* ---------- Monthly spending viewer ---------- */
-.section-heading {
-  margin: 32px 0 16px;
+/* ---------- Summary page: stat row, panels, trend chart ---------- */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4f46e5, #a855f7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.stat-label {
+  margin: 0 0 2px;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.stat-value {
+  margin: 0;
   font-family: var(--font-heading);
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--text);
-  max-width: 400px;
 }
 
-.monthly-viewer-card {
-  max-width: 400px;
-  align-items: center;
+.panel-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.monthly-viewer-header {
-  width: 100%;
+.panel-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
 
-.monthly-viewer-title {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-.month-viewer-label {
+.panel-title {
+  margin: 0;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--text);
 }
 
-.month-viewer-total {
-  font-size: 0.8rem;
+.panel-subtext {
+  font-size: 0.78rem;
   color: var(--text-muted);
+}
+
+.panel-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.panel-link:hover {
+  text-decoration: underline;
+}
+
+.scope-select {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.category-panel-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.category-panel-list {
+  flex: 1;
+  min-width: 220px;
+}
+
+/* Bar-style spending trend, pure CSS (no chart library) */
+.trend-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  height: 160px;
+  padding-top: 8px;
+}
+
+.trend-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 6px;
+}
+
+.trend-bar-value {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.trend-bar-track {
+  width: 100%;
+  max-width: 34px;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  background: var(--bg);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.trend-bar-fill {
+  width: 100%;
+  min-height: 4px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #a855f7, #4f46e5);
+  transition: height 0.3s ease;
+}
+
+.trend-bar-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.month-nav-inline {
+  display: flex;
+  gap: 6px;
 }
 
 .month-nav-btn {
@@ -1047,6 +1106,12 @@ textarea:focus-visible {
   transition: background 0.15s ease, transform 0.1s ease;
 }
 
+.month-nav-btn.small {
+  width: 28px;
+  height: 28px;
+  font-size: 1rem;
+}
+
 .month-nav-btn:hover:not(:disabled) {
   background: var(--border);
 }
@@ -1059,6 +1124,111 @@ textarea:focus-visible {
   opacity: 0.35;
   cursor: not-allowed;
 }
+
+.overview-month-label {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.overview-month-total {
+  margin: 0 0 4px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.mini-category-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mini-category-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.mini-category-amount {
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.top-spending-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.top-spending-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.top-spending-rank {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.top-spending-name {
+  flex: 1;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.top-spending-amount {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.recent-transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@media (max-width: 700px) {
+  .stat-row {
+    grid-template-columns: 1fr;
+  }
+
+  .two-col-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-panel-body {
+    flex-direction: column;
+  }
+}
+
 
 .form-field input[aria-invalid="true"],
 .form-field select[aria-invalid="true"] {
@@ -1134,10 +1304,6 @@ textarea:focus-visible {
 
   .form-card {
     padding: 18px;
-  }
-
-  .summary-total-card {
-    max-width: 100%;
   }
 }
 
