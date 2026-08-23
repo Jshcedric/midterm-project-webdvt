@@ -10,7 +10,10 @@ function Summary() {
   // Reuses the SAME transaction data as the rest of the app —
   // no separate data source, just derived calculations.
   const { transactions } = useTransactions();
-  const [expandedMonth, setExpandedMonth] = useState(null);
+
+  // 0 = most recent month with spending, 1 = the month before that, etc.
+  // Navigated with the ‹ › buttons below.
+  const [monthIndex, setMonthIndex] = useState(0);
 
   const expenses = transactions.filter((t) => t.type === "expense");
   const totalExpense = expenses.reduce((sum, t) => sum + Number(t.amount), 0);
@@ -33,9 +36,8 @@ function Summary() {
     .filter((c) => c.total > 0)
     .map((c) => ({ label: c.category, value: c.total, color: c.color }));
 
-  // Groups every expense by "YYYY-MM" so we can show how much was spent
-  // each month, plus which categories made up that month's total —
-  // basically a month-by-month spending tracker.
+  // Groups every expense by "YYYY-MM" so the viewer below can flip
+  // between individual months, most recent first.
   const monthlySpending = useMemo(() => {
     const months = {};
 
@@ -65,10 +67,23 @@ function Summary() {
       .sort((a, b) => (a.monthKey < b.monthKey ? 1 : -1)); // most recent month first
   }, [expenses]);
 
-  const highestMonthTotal = monthlySpending.reduce(
-    (max, month) => Math.max(max, month.total),
-    0
-  );
+  // Clamp instead of using an effect — if transactions change and there
+  // are fewer months than before, this just falls back to the last one.
+  const safeIndex =
+    monthlySpending.length > 0
+      ? Math.min(monthIndex, monthlySpending.length - 1)
+      : 0;
+  const selectedMonth = monthlySpending[safeIndex] ?? null;
+
+  const canGoOlder = safeIndex < monthlySpending.length - 1;
+  const canGoNewer = safeIndex > 0;
+
+  const monthChartData =
+    selectedMonth?.categories.map((c) => ({
+      label: c.category,
+      value: c.amount,
+      color: c.color,
+    })) ?? [];
 
   return (
     <div className="page">
@@ -117,52 +132,75 @@ function Summary() {
           </div>
 
           <h2 className="section-heading">Monthly Spending</h2>
-          <div className="monthly-list">
-            {monthlySpending.map((month) => {
-              const isOpen = expandedMonth === month.monthKey;
-              const barPercent =
-                highestMonthTotal > 0 ? (month.total / highestMonthTotal) * 100 : 0;
 
-              return (
-                <div key={month.monthKey} className="month-card">
-                  <button
-                    type="button"
-                    className="month-card-header"
-                    onClick={() => setExpandedMonth(isOpen ? null : month.monthKey)}
-                    aria-expanded={isOpen}
-                  >
-                    <div className="month-card-heading">
-                      <span className="month-name">{month.label}</span>
-                      <span className="month-card-right">
-                        <span className="month-total">{formatCurrency(month.total)}</span>
-                        <span className={`month-chevron ${isOpen ? "is-open" : ""}`}>⌄</span>
-                      </span>
-                    </div>
-                    <div className="month-bar-track">
-                      <div className="month-bar-fill" style={{ width: `${barPercent}%` }} />
-                    </div>
-                  </button>
+          {selectedMonth && (
+            <div className="chart-card monthly-viewer-card">
+              <div className="monthly-viewer-header">
+                <button
+                  type="button"
+                  className="month-nav-btn"
+                  onClick={() => setMonthIndex(safeIndex + 1)}
+                  disabled={!canGoOlder}
+                  aria-label="Previous month"
+                >
+                  ‹
+                </button>
 
-                  {isOpen && (
-                    <div className="month-categories">
-                      {month.categories.map((c) => (
-                        <div key={c.category} className="month-category-row">
-                          <span
-                            className="transaction-category-dot"
-                            style={{ background: c.color }}
-                          />
-                          <span className="month-category-name">{c.category}</span>
-                          <span className="month-category-amount">
-                            {formatCurrency(c.amount)}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                <div className="monthly-viewer-title">
+                  <span className="month-viewer-label">{selectedMonth.label}</span>
+                  <span className="month-viewer-total">
+                    {formatCurrency(selectedMonth.total)} spent
+                  </span>
                 </div>
-              );
-            })}
-          </div>
+
+                <button
+                  type="button"
+                  className="month-nav-btn"
+                  onClick={() => setMonthIndex(safeIndex - 1)}
+                  disabled={!canGoNewer}
+                  aria-label="Next month"
+                >
+                  ›
+                </button>
+              </div>
+
+              <div className="chart-donut-holder">
+                <DonutChart
+                  data={monthChartData}
+                  size={190}
+                  thickness={26}
+                  centerLabel="Spent"
+                  centerValue={formatCurrency(selectedMonth.total)}
+                />
+              </div>
+
+              <ul className="breakdown-list">
+                {selectedMonth.categories.map((c) => {
+                  const percent =
+                    selectedMonth.total > 0 ? (c.amount / selectedMonth.total) * 100 : 0;
+
+                  return (
+                    <li key={c.category} className="breakdown-row">
+                      <span
+                        className="breakdown-ring"
+                        style={{
+                          background: `conic-gradient(${c.color} ${percent}%, var(--border) ${percent}% 100%)`,
+                        }}
+                      >
+                        <span className="breakdown-ring-percent">{Math.round(percent)}%</span>
+                      </span>
+
+                      <span className="breakdown-info">
+                        <span className="breakdown-name">{c.category}</span>
+                      </span>
+
+                      <span className="breakdown-amount">{formatCurrency(c.amount)}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </>
       )}
 
