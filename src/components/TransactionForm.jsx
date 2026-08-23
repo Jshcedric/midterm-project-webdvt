@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getCategoriesForType } from "../data/categories.js";
-import { getTodayDateString } from "../utils/format.js";
+import { formatCurrency, getTodayDateString } from "../utils/format.js";
+import { getCategoryColor } from "../utils/categoryColors.js";
 
 // Reusable for both "Add Transaction" and "Edit Transaction" (Phase 5).
 // Pass `initialValues` to pre-fill the form when editing.
@@ -205,6 +206,40 @@ function TransactionForm({ initialValues, onSubmit, submitLabel = "Save Transact
           value={values.description}
           onChange={(e) => handleChange("description", e.target.value)}
         />
+      </div>
+
+      <div className="preview-card">
+        <p className="preview-label">Preview</p>
+
+        {values.title || values.amount || values.category ? (
+          <div className="preview-row">
+            <span
+              className="preview-dot"
+              style={{
+                background: values.category
+                  ? getCategoryColor(values.category)
+                  : "var(--border)",
+              }}
+            />
+            <div className="preview-info">
+              <span className="preview-title">{values.title || "Untitled"}</span>
+              <span className="preview-meta">
+                {values.type === "income" ? "Income" : "Expense"}
+                {values.category ? ` • ${values.category}` : ""}
+              </span>
+            </div>
+            <span
+              className={`preview-amount ${
+                values.type === "income" ? "amount-income" : "amount-expense"
+              }`}
+            >
+              {values.type === "income" ? "+" : "-"}
+              {formatCurrency(values.amount || 0)}
+            </span>
+          </div>
+        ) : (
+          <p className="preview-empty">Fill in the details above to see a preview.</p>
+        )}
       </div>
 
       <button type="submit" className="btn-primary">
