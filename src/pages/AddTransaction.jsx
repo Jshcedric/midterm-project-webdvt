@@ -13,7 +13,9 @@ function AddTransaction() {
 
   return (
     <div className="page">
-      <h1 className="page-title">Add Transaction</h1>
+      <header className="page-heading dashboard-heading">
+        <span className="eyebrow">Budget Tracker / new entry</span>
+      </header>
 
       <div className="form-card">
         <TransactionForm onSubmit={handleAdd} submitLabel="Add Transaction" />

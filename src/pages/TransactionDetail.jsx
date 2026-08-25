@@ -52,7 +52,10 @@ function TransactionDetail() {
   if (isEditing) {
     return (
       <div className="page">
-        <h1 className="page-title">Edit Transaction</h1>
+        <header className="page-heading">
+          <span className="eyebrow">Budget Tracker / edit entry</span>
+          <h1 className="page-title">Revise this transaction.</h1>
+        </header>
         <div className="form-card">
           <TransactionForm
             initialValues={{
@@ -77,7 +80,10 @@ function TransactionDetail() {
   // ---- View mode ----
   return (
     <div className="page">
-      <h1 className="page-title">Transaction Detail</h1>
+      <header className="page-heading">
+        <span className="eyebrow">Budget Tracker / entry detail</span>
+        <h1 className="page-title">Transaction record.</h1>
+      </header>
 
       <div className="detail-card">
         <div className="detail-header">

@@ -129,7 +129,9 @@ function Summary() {
 
   return (
     <div className="page">
-      <h1 className="page-title">Summary</h1>
+      <header className="page-heading dashboard-heading">
+        <span className="eyebrow">Budget Tracker / analysis</span>
+      </header>
 
       {totalExpenseAllTime === 0 ? (
         <div className="placeholder-card">
@@ -140,21 +142,21 @@ function Summary() {
         <>
           <div className="stat-row">
             <div className="stat-card">
-              <span className="stat-icon">💸</span>
+              <span className="stat-icon" aria-hidden="true">01</span>
               <div>
                 <p className="stat-label">Total Spent</p>
                 <p className="stat-value">{formatCurrency(totalExpenseAllTime)}</p>
               </div>
             </div>
             <div className="stat-card">
-              <span className="stat-icon">📅</span>
+              <span className="stat-icon" aria-hidden="true">02</span>
               <div>
                 <p className="stat-label">This Month</p>
                 <p className="stat-value">{formatCurrency(totalThisMonth)}</p>
               </div>
             </div>
             <div className="stat-card">
-              <span className="stat-icon">🧾</span>
+              <span className="stat-icon" aria-hidden="true">03</span>
               <div>
                 <p className="stat-label">Transactions</p>
                 <p className="stat-value">{transactions.length}</p>

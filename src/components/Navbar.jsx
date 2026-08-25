@@ -11,8 +11,16 @@ function Navbar() {
     <header className="navbar">
       <div className="navbar-inner">
         <NavLink to="/" className="navbar-brand">
-          <span className="brand-mark">₱</span>
-          <span>Budget Tracker</span>
+          <span className="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M8 8.5h16M8 15.9h11M8 23.5h16" />
+              <path d="M12 5v22" />
+            </svg>
+          </span>
+          <span className="brand-copy">
+            <strong>Budget Tracker</strong>
+            <small>financial overview</small>
+          </span>
         </NavLink>
 
         <nav className="navbar-links">
@@ -20,7 +28,7 @@ function Navbar() {
             Dashboard
           </NavLink>
           <NavLink to="/add" className={linkClass}>
-            Add Transaction
+            New Entry
           </NavLink>
           <NavLink to="/summary" className={linkClass}>
             Summary

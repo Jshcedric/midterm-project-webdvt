@@ -73,12 +73,14 @@ function Dashboard() {
 
   return (
     <div className="page">
-      <h1 className="page-title">Dashboard</h1>
+      <header className="page-heading dashboard-heading">
+        <span className="eyebrow">Budget Tracker / overview</span>
+      </header>
 
-      <div className="dashboard-hero-grid">
+      <div className="dashboard-workspace">
         <div className="hero-balance-card">
           <div>
-            <p className="hero-label">Current Balance</p>
+            <p className="hero-label">Available balance</p>
             <div className="hero-value-row">
               <p className="hero-value">
                 {showBalance ? formatCurrency(balance) : "₱ • • • • • •"}
@@ -94,7 +96,7 @@ function Dashboard() {
               </button>
             </div>
           </div>
-          <div className="hero-stats">
+          <div className="hero-stats" aria-label="Income and expense totals">
             <div className="hero-stat">
               <span className="hero-stat-dot dot-income" />
               <span>Income</span>
@@ -109,6 +111,7 @@ function Dashboard() {
         </div>
 
         <div className="chart-card">
+          <div className="section-kicker">Movement by category</div>
 
           {categoryBreakdown.length === 0 ? (
             <p className="chart-empty">Add a transaction to see your breakdown.</p>
@@ -154,35 +157,35 @@ function Dashboard() {
             </>
           )}
         </div>
-      </div>
 
-      <FilterBar
-        typeFilter={typeFilter}
-        onTypeChange={setTypeFilter}
-        categoryFilter={categoryFilter}
-        onCategoryChange={setCategoryFilter}
-        categories={categories}
-      />
+        <FilterBar
+          typeFilter={typeFilter}
+          onTypeChange={setTypeFilter}
+          categoryFilter={categoryFilter}
+          onCategoryChange={setCategoryFilter}
+          categories={categories}
+        />
 
-      <div className="transaction-list">
-        {sortedTransactions.length === 0 ? (
-          <div className="placeholder-card">
-            {transactions.length === 0 ? (
-              <>
-                <p>You haven't added any transactions yet.</p>
-                <Link to="/add" className="btn-primary btn-inline empty-state-cta">
-                  Add your first transaction
-                </Link>
-              </>
-            ) : (
-              "No transactions match this filter."
-            )}
-          </div>
-        ) : (
-          sortedTransactions.map((transaction) => (
-            <TransactionCard key={transaction.id} transaction={transaction} />
-          ))
-        )}
+        <div className="transaction-list">
+          {sortedTransactions.length === 0 ? (
+            <div className="placeholder-card">
+              {transactions.length === 0 ? (
+                <>
+                  <p>You haven't added any transactions yet.</p>
+                  <Link to="/add" className="btn-primary btn-inline empty-state-cta">
+                    Add your first transaction
+                  </Link>
+                </>
+              ) : (
+                "No transactions match this filter."
+              )}
+            </div>
+          ) : (
+            sortedTransactions.map((transaction) => (
+              <TransactionCard key={transaction.id} transaction={transaction} />
+            ))
+          )}
+        </div>
       </div>
 
       <ScrollToTopButton />
