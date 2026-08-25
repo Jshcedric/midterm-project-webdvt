@@ -3,17 +3,17 @@
 // they're rendered from.
 
 const CATEGORY_COLORS = {
-  Salary: "#22c55e",
-  Allowance: "#06b6d4",
-  Gift: "#ec4899",
-  Food: "#f97316",
-  Transportation: "#eab308",
-  Bills: "#ef4444",
-  Shopping: "#8b5cf6",
-  Entertainment: "#f43f5e",
-  Health: "#14b8a6",
-  Education: "#4f46e5",
-  Other: "#64748b",
+  Salary: "#50765f",
+  Allowance: "#537477",
+  Gift: "#aa6d62",
+  Food: "#b46b43",
+  Transportation: "#a48642",
+  Bills: "#a74f43",
+  Shopping: "#826b80",
+  Entertainment: "#a85d63",
+  Health: "#4f7d72",
+  Education: "#5e6f89",
+  Other: "#77736b",
 };
 
 // Any category not in the map above (e.g. a custom one a user typed in)
@@ -21,16 +21,16 @@ const CATEGORY_COLORS = {
 // based on the category name itself — so it's always the same color for
 // that name, without needing to track render order.
 const FALLBACK_PALETTE = [
-  "#4f46e5",
-  "#22c55e",
-  "#f97316",
-  "#ec4899",
-  "#06b6d4",
-  "#eab308",
-  "#8b5cf6",
-  "#ef4444",
-  "#14b8a6",
-  "#f43f5e",
+  "#5e6f89",
+  "#50765f",
+  "#b46b43",
+  "#aa6d62",
+  "#537477",
+  "#a48642",
+  "#826b80",
+  "#a74f43",
+  "#4f7d72",
+  "#a85d63",
 ];
 
 export function getCategoryColor(category) {
