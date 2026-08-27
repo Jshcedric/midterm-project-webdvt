@@ -75,6 +75,9 @@ function Dashboard() {
     <div className="page">
       <header className="page-heading dashboard-heading">
         <span className="eyebrow">Budget Tracker / overview</span>
+        <Link to="/add" className="btn-primary btn-inline dashboard-add-btn">
+          Add Transaction
+        </Link>
       </header>
 
       <div className="dashboard-workspace">

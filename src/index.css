@@ -57,7 +57,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .page-container { min-width: 0; width: 100%; max-width: 1440px; margin: 0 auto; padding: 42px clamp(24px, 4vw, 58px) 80px; }
 .page { display: flex; flex-direction: column; gap: 22px; }
 .page-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 0.32fr); align-items: end; gap: 24px; margin-bottom: 8px; }
-.dashboard-heading { display: block; margin-bottom: 0; }
+.dashboard-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 0; }
+.dashboard-add-btn { flex: 0 0 auto; min-height: 42px; padding: 0 17px; }
+.back-dashboard-btn { flex: 0 0 auto; white-space: nowrap; }
 .eyebrow, .section-kicker { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.4; letter-spacing: 0.07em; text-transform: uppercase; color: var(--primary); }
 .page-title { grid-column: 1; margin: 10px 0 0; font-size: clamp(2.15rem, 4vw, 3.85rem); line-height: 1; letter-spacing: -0.05em; font-weight: 600; }
 .page-subtitle { grid-column: 2; grid-row: 1 / span 2; margin: 0; align-self: end; color: var(--text-muted); font-size: 0.91rem; line-height: 1.55; }
@@ -66,8 +68,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .navbar { position: sticky; top: 0; z-index: 10; min-height: 76px; background: color-mix(in srgb, var(--nav) 96%, transparent); color: #eaf3f1; border-bottom: 1px solid rgba(255,255,255,.08); backdrop-filter: blur(14px); }
 .navbar-inner { width: 100%; max-width: 1440px; min-height: 76px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 58px); display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: clamp(30px, 5vw, 72px); }
 .navbar-brand { display: flex; align-items: center; gap: 11px; }
-.brand-mark { width: 39px; height: 39px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 10px; background: #d9fff4; color: #0b5548; }
-.brand-mark svg { width: 23px; height: 23px; stroke: currentColor; stroke-width: 1.8; }
 .brand-copy { display: flex; flex-direction: column; line-height: 1; }
 .brand-copy strong { font-size: 1.02rem; font-weight: 650; letter-spacing: -0.02em; }
 .brand-copy small { margin-top: 5px; color: #a2b3b1; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: .05em; text-transform: uppercase; }
@@ -254,6 +254,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .nav-link { flex: 1; justify-content: center; font-size: .75rem; }
   .page-container { padding:34px 16px 70px; }
   .page-heading { display:block; }
+  .dashboard-heading { display:flex; align-items:center; }
+  .dashboard-add-btn { min-height:40px; padding:0 14px; font-size:.78rem; }
   .page-title { margin-top:10px; font-size:clamp(2.1rem,11vw,3.15rem); }
   .page-subtitle { margin-top:16px; max-width:45ch; }
   .hero-balance-card { min-height:270px; padding:24px 21px; }

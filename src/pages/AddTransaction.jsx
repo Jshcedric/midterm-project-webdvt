@@ -15,6 +15,13 @@ function AddTransaction() {
     <div className="page">
       <header className="page-heading dashboard-heading">
         <span className="eyebrow">Budget Tracker / new entry</span>
+        <button
+          type="button"
+          className="btn-secondary back-dashboard-btn"
+          onClick={() => navigate("/")}
+        >
+          ← Back to Dashboard
+        </button>
       </header>
 
       <div className="form-card">
